@@ -6,3 +6,8 @@ Content-Type: application/json
     "LastName": "Smith",
     "Age": 19
 }
+
+###
+
+@userId = 0
+GET https://localhost:7211/api/user/{{userId}}

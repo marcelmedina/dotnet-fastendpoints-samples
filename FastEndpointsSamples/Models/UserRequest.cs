@@ -1,6 +1,6 @@
 ﻿namespace FastEndpointsSamples.Models
 {
-    public class MyRequest
+    public class UserRequest
     {
         public required string FirstName { get; set; }
         public required string LastName { get; set; }
