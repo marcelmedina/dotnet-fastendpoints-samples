@@ -1,4 +1,5 @@
 ﻿using FastEndpoints;
+using FastEndpoints.Swagger;
 using FastEndpointsSamples.Models;
 
 namespace FastEndpointsSamples.Endpoints
@@ -9,6 +10,7 @@ namespace FastEndpointsSamples.Endpoints
         {
             Post("/api/user/create");
             AllowAnonymous();
+            Description(b => b.AutoTagOverride("Users"));
         }
 
         public override async Task HandleAsync(UserRequest req, CancellationToken ct)
