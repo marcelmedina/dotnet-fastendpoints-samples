@@ -1,8 +1,9 @@
 using FastEndpoints;
 using FastEndpoints.Swagger;
 using FastEndpointsSamples.Extensions;
-using NSwag;
 using System.Reflection;
+using FastEndpoints.ClientGen.Kiota;
+using Kiota.Builder;
 
 var builder = WebApplication.CreateBuilder();
 builder.Services
@@ -29,4 +30,21 @@ app
         c.Errors.UseProblemDetails(); // Use ProblemDetails for error responses
     }) 
     .UseSwaggerGen();
+
+if (app.Environment.IsDevelopment())
+{
+    app.MapApiClientEndpoint("/cs-client", c =>
+        {
+            c.SwaggerDocumentName = "v1"; //must match document name set above
+            c.Language = GenerationLanguage.CSharp;
+            c.ClientNamespaceName = "Api";
+            c.ClientClassName = "UsersClient";
+        },
+        o => //endpoint customization settings
+        {
+            o.CacheOutput(p => p.Expire(TimeSpan.FromDays(365))); //cache the zip
+            // o.ExcludeFromDescription(); //hides this endpoint from swagger docs
+        });
+}
+
 app.Run();
