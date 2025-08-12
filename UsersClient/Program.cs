@@ -1,5 +1,10 @@
+using Api;
+using Microsoft.Kiota.Abstractions;
+using Microsoft.Kiota.Abstractions.Authentication;
+using Microsoft.Kiota.Http.HttpClientLibrary;
+
 // Set your API base URL here
-var baseUrl = "https://localhost:7211/"; // TODO: Replace with actual base URL
+var baseUrl = "https://localhost:7211/";
 
 // Use the AnonymousAuthenticationProvider for anonymous/public APIs
 var authProvider = new AnonymousAuthenticationProvider();
@@ -9,7 +14,7 @@ IRequestAdapter adapter = new HttpClientRequestAdapter(authProvider);
 var client = new UsersClient(adapter);
 
 // Use WithUrl to set the full endpoint for the user request
-var userId = "1";
+var userId = "0";
 var userRequest = client.Api.User[userId].WithUrl($"{baseUrl}api/user/{userId}");
 try
 {
