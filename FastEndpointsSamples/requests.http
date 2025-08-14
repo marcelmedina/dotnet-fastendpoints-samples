@@ -2,9 +2,9 @@ POST https://localhost:7211/api/user/create
 Content-Type: application/json
 
 {
-    "firstName": "John",
+    "firstName": "J",
     "LastName": "Smith",
-    "Age": 19
+    "Age": 17
 }
 
 ###

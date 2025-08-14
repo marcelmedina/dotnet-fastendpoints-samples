@@ -1,40 +1,31 @@
 ﻿using FastEndpoints;
 using FastEndpointsSamples.Models;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace FastEndpointsSamples.Endpoints
 {
-    public class GetUser : EndpointWithoutRequest<
-        Results<Ok<UserResponse>,
-            NotFound,
-            ProblemDetails>>
+    public class GetUser : Endpoint<UserIdRequest, UserResponse>
     {
         public override void Configure()
         {
             Get("/api/user/{userId}");
             AllowAnonymous();
+            DontThrowIfValidationFails();
         }
 
-        public override Task<Results<Ok<UserResponse>, NotFound, ProblemDetails>> ExecuteAsync(CancellationToken ct)
+        public override Task<Task> HandleAsync(UserIdRequest req, CancellationToken ct)
         {
-            var userId = Route<int>("userId");
-
-            return Task.FromResult<Results<Ok<UserResponse>, NotFound, ProblemDetails>>(userId switch
+            if (req.UserId <= 0)
             {
-                0 => TypedResults.NotFound(),
-                -1 => ReturnProblemDetails(),
-                _ => TypedResults.Ok(new UserResponse
-                {
-                    FullName = "John Doe",
-                    IsOver18 = true
-                })
-            });
-        }
+                AddError("User Identifier has to be greater than 0");
+            }
 
-        ProblemDetails ReturnProblemDetails()
-        {
-            AddError("User Identifier has to be greater than 0");
-            return new ProblemDetails(ValidationFailures);
+            ThrowIfAnyErrors();
+
+            return Task.FromResult(Send.OkAsync(new UserResponse
+            {
+                FullName = "John Doe",
+                IsOver18 = true
+            }, ct));
         }
     }
 }
