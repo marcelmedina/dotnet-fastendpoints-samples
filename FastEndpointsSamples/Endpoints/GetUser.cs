@@ -20,8 +20,7 @@ namespace FastEndpointsSamples.Endpoints
     }
 
     public class GetUser : EndpointWithoutRequest<
-        Results<Ok<UserResponse>,
-            ProblemDetails>>
+        Results<Ok<UserResponse>, ProblemDetails>>
     {
         public override void Configure()
         {
