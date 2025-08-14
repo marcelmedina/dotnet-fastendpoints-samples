@@ -3,7 +3,7 @@ using FastEndpointsSamples.Models;
 
 namespace FastEndpointsSamples.Endpoints
 {
-    public class CreateUser : Endpoint<UserRequest, UserResponse>
+    public class CreateUser : Endpoint<UserRequest, UserResponse, UserMapper>
     {
         public override void Configure()
         {
@@ -13,11 +13,9 @@ namespace FastEndpointsSamples.Endpoints
 
         public override async Task HandleAsync(UserRequest req, CancellationToken ct)
         {
-            await Send.OkAsync(new UserResponse
-            {
-                FullName = $"{req.FirstName} {req.LastName}",
-                IsOver18 = req.Age >= 18
-            }, ct);
+            var user = Map.ToEntity(req);
+            var userResponse = Map.FromEntity(user);
+            await Send.OkAsync(userResponse, ct);
         }
     }
 }

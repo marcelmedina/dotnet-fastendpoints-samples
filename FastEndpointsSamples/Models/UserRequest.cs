@@ -5,6 +5,7 @@ namespace FastEndpointsSamples.Models
 {
     public class UserRequest
     {
+        public int UserId { get; set; }
         public required string FirstName { get; set; }
         public required string LastName { get; set; }
         public int Age { get; set; }
@@ -14,6 +15,9 @@ namespace FastEndpointsSamples.Models
     {
         public UserRequestValidator()
         {
+            RuleFor(x => x.UserId)
+                .Must(x => x > 0).WithMessage("UserId must be greater than zero");
+
             RuleFor(x => x.FirstName)
                 .NotEmpty().WithMessage("your first name is required!")
                 .MinimumLength(2).WithMessage("your first name is too short!");
@@ -24,7 +28,7 @@ namespace FastEndpointsSamples.Models
 
             RuleFor(x => x.Age)
                 .NotEmpty().WithMessage("we need your age!")
-                .GreaterThan(18).WithMessage("you must be over 18 years old to register!");
+                .GreaterThanOrEqualTo(18).WithMessage("you must be over 18 years old to register!");
         }
     }
 }
