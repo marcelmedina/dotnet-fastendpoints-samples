@@ -1,4 +1,4 @@
-### JSON body for user creation
+### JSON body
 POST https://localhost:7211/api/user/create
 Content-Type: application/json
 
@@ -8,8 +8,15 @@ Content-Type: application/json
     "Age": 19
 }
 
-###
+### Form fields
 
-### Route parameter for userId
+### Route parameters
 @userId = 0
 GET https://localhost:7211/api/user/{{userId}}
+
+### Query parameters
+
+### SPECIAL
+### User claims on property with [FromClaim] attribute
+### HTTP headers on property with [FromHeader] attribute
+### Permissions on property with [HasPermission] attribute
