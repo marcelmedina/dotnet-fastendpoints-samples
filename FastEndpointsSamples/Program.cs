@@ -1,8 +1,14 @@
 using FastEndpoints;
 using FastEndpoints.Swagger;
 using System.Reflection;
+using FastEndpointsSamples.Middleware;
 
 var builder = WebApplication.CreateBuilder();
+//builder.Services.AddCommandMiddleware(
+//    c =>
+//    {
+//        c.Register(typeof(CommandLogger<,>));
+//    });
 builder.Services
     .AddFastEndpoints(o =>
     {

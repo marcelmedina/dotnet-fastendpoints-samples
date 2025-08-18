@@ -1,4 +1,5 @@
 ﻿using FastEndpoints;
+using FastEndpointsSamples.Commands;
 using FastEndpointsSamples.Models;
 
 namespace FastEndpointsSamples.Endpoints
@@ -13,9 +14,16 @@ namespace FastEndpointsSamples.Endpoints
 
         public override async Task HandleAsync(UserRequest req, CancellationToken ct)
         {
+            var fullName = await new GetFullName()
+                {
+                    FirstName = req.FirstName,
+                    LastName = req.LastName
+                }
+                .ExecuteAsync(ct: ct);
+
             await Send.OkAsync(new UserResponse
             {
-                FullName = $"{req.FirstName} {req.LastName}",
+                FullName = fullName,
                 IsOver18 = req.Age >= 18
             }, ct);
         }
