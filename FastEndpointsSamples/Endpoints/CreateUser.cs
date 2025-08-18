@@ -1,4 +1,5 @@
 ﻿using FastEndpoints;
+using FastEndpointsSamples.Events;
 using FastEndpointsSamples.Models;
 
 namespace FastEndpointsSamples.Endpoints
@@ -13,6 +14,14 @@ namespace FastEndpointsSamples.Endpoints
 
         public override async Task HandleAsync(UserRequest req, CancellationToken ct)
         {
+            await PublishAsync(new UserCreatedEvent
+            {
+                FirstName = req.FirstName,
+                LastName = req.LastName,
+                Age = req.Age,
+                DateCreated = DateTime.UtcNow
+            }, Mode.WaitForAll, ct);
+
             await Send.OkAsync(new UserResponse
             {
                 FullName = $"{req.FirstName} {req.LastName}",
