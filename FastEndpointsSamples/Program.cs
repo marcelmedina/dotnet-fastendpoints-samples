@@ -1,5 +1,6 @@
 using FastEndpoints;
 using FastEndpoints.Swagger;
+using FastEndpointsSamples.Processors;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder();
@@ -12,6 +13,12 @@ builder.Services
 
 var app = builder.Build();
 app
-    .UseFastEndpoints()
+    .UseFastEndpoints(c =>
+    {
+        c.Endpoints.Configurator = ep =>
+        {
+            ep.PreProcessor<GlobalTenantIdChecker>(Order.Before);
+        };
+    })
     .UseSwaggerGen();
 app.Run();
