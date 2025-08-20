@@ -23,7 +23,7 @@ namespace FastEndpointsSamples.Endpoints
             await Send.OkAsync(new UserResponse
             {
                 FullName = $"{req.FirstName} {req.LastName}",
-                IsOver18 = req.Age >= 18
+                IsOver18 = state.IsValidAge
             }, ct);
         }
     }
