@@ -12,7 +12,7 @@ namespace FastEndpointsSamples.Endpoints
             DontThrowIfValidationFails();
         }
 
-        public override Task<Task> HandleAsync(UserIdRequest req, CancellationToken ct)
+        public override async Task HandleAsync(UserIdRequest req, CancellationToken ct)
         {
             if (req.UserId <= 0)
             {
@@ -21,11 +21,11 @@ namespace FastEndpointsSamples.Endpoints
 
             ThrowIfAnyErrors();
 
-            return Task.FromResult(Send.OkAsync(new UserResponse
+            await Send.OkAsync(new UserResponse
             {
                 FullName = "John Doe",
                 IsOver18 = true
-            }, ct));
+            }, ct);
         }
     }
 }
