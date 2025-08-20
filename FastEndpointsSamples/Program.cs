@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder();
 //builder.Services.AddCommandMiddleware(
 //    c =>
 //    {
-//        c.Register(typeof(CommandLogger<,>));
+//        c.Register(typeof(CommandLogger<,>), typeof(ResultLogger<,>));
 //    });
 builder.Services
     .AddFastEndpoints(o =>
