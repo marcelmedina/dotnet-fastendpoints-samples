@@ -11,3 +11,6 @@ Content-Type: application/json
 
 @userId = 0
 GET https://localhost:7211/api/user/{{userId}}
+
+###
+GET https://localhost:7211/api/user/-1
