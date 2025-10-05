@@ -11,6 +11,7 @@ namespace FastEndpointsSamples.Endpoints
             AllowAnonymous();
         }
 
+        // Using HandleAsync (recommended approach)
         public override Task HandleAsync(MyRequest req, CancellationToken ct)
         {
             Response = new()
@@ -20,5 +21,18 @@ namespace FastEndpointsSamples.Endpoints
             };
             return Task.CompletedTask;
         }
+
+        // Alternative implementation using ExecuteAsync
+        /*public override Task<MyResponse> ExecuteAsync(MyRequest req, CancellationToken ct)
+        {
+            var response = new MyResponse
+            {
+                FullName = $"{req.FirstName} {req.LastName}",
+                IsOver18 = req.Age >= 18
+            };
+
+            // Manually send the response
+            return Task.FromResult(response);
+        }*/
     }
 }
